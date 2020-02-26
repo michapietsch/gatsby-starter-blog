@@ -5,6 +5,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
   const blogPost = path.resolve(`./src/templates/blog-post.js`)
+  const blogPostPrint = path.resolve(`./src/templates/blog-post-print.js`)
   const result = await graphql(
     `
       {
@@ -45,6 +46,14 @@ exports.createPages = async ({ graphql, actions }) => {
         slug: post.node.fields.slug,
         previous,
         next,
+      },
+    })
+
+    createPage({
+      path: post.node.fields.slug + "print",
+      component: blogPostPrint,
+      context: {
+        slug: post.node.fields.slug,
       },
     })
   })
